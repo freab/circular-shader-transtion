@@ -34,7 +34,7 @@ body {
   font-size: 25px;
   margin: 0 0 15px;
   font-weight: normal;
-  color: #000; /* Added this rule */
+  color: #fff;
 }
 
 .frame__title h2 {
@@ -56,5 +56,5 @@ body {
 }
 
 .frame__title h2 a:hover {
-  color: #aaa;
+  color: #fff;
 }
