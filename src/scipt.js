@@ -7,7 +7,7 @@ import "./style.css";
 
 // Initialize scene
 const canvas = document.querySelector("canvas.webGL");
-canvas.style.cursor = "grab || grabing";
+canvas.style.cursor = "grab";
 const scene = new THREE.Scene();
 
 // Set up renderer
@@ -37,19 +37,15 @@ document.querySelector(".frame__title").addEventListener("click", function () {
   }
 });
 
-// Initialize state from local storage if available
 const storedState = JSON.parse(localStorage.getItem("animationState"));
 const initialState = {
-  play: true, // Default value for play
-  index: 0, // Default value for index
-  animating: false // Track if an animation is currently playing
+  play: true,
+  index: 0,
+  animating: false
 };
 let state = storedState || initialState;
 
-// Start animation loop
 const cleanup = animate();
-
-// Function definitions
 
 function initRenderer(canvas) {
   const sizes = {
@@ -59,7 +55,7 @@ function initRenderer(canvas) {
 
   const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
-    antialias: true // You can disable antialias or reduce samples for better performance
+    antialias: true
   });
 
   renderer.setSize(sizes.width, sizes.height);
@@ -94,15 +90,15 @@ function initControls(camera, canvas) {
 }
 
 function initGeometryAndMaterial() {
-  const geometry = new THREE.PlaneGeometry(3.4, 3.4, 32, 32); // Use BufferGeometry for better performance
-
-  // Define initial color and colors array
+  const geometry = new THREE.PlaneGeometry(3.4, 3.4, 32, 32);
   const initialColor = new THREE.Color();
   const colors = [
     initialColor,
-    new THREE.Color(0xff0000),
-    new THREE.Color(0x00ff00),
-    new THREE.Color(0x0000ff)
+    new THREE.Color(0x8c75ff),
+    new THREE.Color(0x5cffab),
+    new THREE.Color(0x0000ff),
+    new THREE.Color(0xf74a8a),
+    new THREE.Color(0x3df2f2)
   ];
 
   // Create a material
@@ -144,14 +140,12 @@ function handleClick() {
 }
 
 function animateColor(colorIndex) {
-  state.animating = true; // Set animating to true before starting the animation
-
-  // Reset u_progress uniform
+  state.animating = true;
   material.uniforms.u_progress.value = 0;
 
   gsap.to(material.uniforms.u_progress, {
     value: 1,
-    duration: 2,
+    duration: 3,
     ease: "power2.out",
     onUpdate: () => {
       const currentColor = material.uniforms.u_color.value;
@@ -182,6 +176,3 @@ function animate() {
 
   return ticker;
 }
-
-// Clean up when the script stops running
-cleanup.kill();
